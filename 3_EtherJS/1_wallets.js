@@ -39,8 +39,8 @@
 // be executed, until you tell the process to stop. 
 
 // This line will tell the process to stop.
-process.exit(0);
-console.log('I am sad line...I will not be printed to console :(');
+// process.exit(0);
+// console.log('I am sad line...I will not be printed to console :(');
 
 // a. Move the sad line above and below `process.exit(0);` to check that the
 // process stops where it is intended to. When you are done, comment out both
@@ -54,6 +54,19 @@ console.log('I am sad line...I will not be printed to console :(');
 let exercise = 0;
 
 // Your code here!
+
+function exit() {
+    console.log("This was the end of the exercise " + exercise);
+    process.exit(0);
+}
+
+// function exit() {
+//     console.log("Process stops here. Exercise: " + exercise)
+//     process.exit(0);
+//     console.log('I am sad line...I will not be printed to console :(');
+// }
+
+// exit();
 
 // c. Bonus. Did you realize that JavaScript/Node.JS has three different ways
 // of declaring a function?
@@ -71,6 +84,15 @@ let exercise = 0;
 
 // Your code here!
 
+const exit1 = function() {
+    console.log("This was the end of the exercise " + exercise);
+    process.exit(0);
+}
+
+const exit2 = () => {
+    console.log("This was the end of the exercise " + exercise);
+    process.exit(0);
+} 
 
 // Exercise 1. NPM Warm Up.
 ///////////////////////////
@@ -129,6 +151,19 @@ exercise = '3a';
 
 // Your code here!
 
+if (process.env.METAMASK_ACCOUNT_1 != "") {
+    console.log("All good")
+} else {
+    console.log("Warning! METAMASK_ACCOUNT_1 is missing!")
+}
+
+
+// if (process.env.METAMASK_ACCOUNT_1 == "") {
+//     console.log("Variable is missing: METAMASK_ACCOUNT_1")
+// } else (process.env.METAMASK_ACCOUNT_1 != ""); {
+//     console.log("Variable is there: METAMASK_ACCOUNT_1")
+// }
+
 // exit();
 
 // b. Create an array with all the names of the variables written in the .env
@@ -139,7 +174,27 @@ exercise = '3b';
 
 // Your code here!
 
+let variables = []
+
+for (let variable in process.env) {
+    if (process.env.hasOwnProperty(variable)) { // ???
+        variables.push(variable);
+    }
+}
+
+console.log(variables, variables.length);
+
 // exit();
+
+let variablesToCheck = [
+    "INFURA_KEY", "INFURA_GOERLI", "INFURA_MAINNET",
+    "ALCHEMY_KEY", "ALCHEMY_GOERLI", "ALCHEMY_MAINNET",
+    "METAMASK_1_ADDRESS", "METAMASK_1_PRIVATE_KEY",
+    "METAMASK_2_ADDRESS", "METAMASK_2_PRIVATE_KEY",
+    "ETHERSCAN_KEY"
+];
+
+console.log(variablesToCheck.length);
 
 // c. Loop through all the elements of the array and check that the variable
 // is set and non-empty under `process.env`.
@@ -152,12 +207,22 @@ exercise = '3b';
 // Solution 1. forEach.
 variablesToCheck.forEach(v => {
     // Your code here!
+    if (!process.env[v]) {
+        console.log("The following variable is empty: ", v)
+    }
 });
 
 // Solution 2. For-loop.
 
 // Your code here!
 
+for (let i = 0; i < variablesToCheck.length; i++) {
+    // Your code here!
+    let v = variablesToCheck[i];
+    if (!process.env[v]) {
+        console.log("The following variable is empty: ", v)
+    }
+};
 
 // exit();
 
@@ -172,6 +237,10 @@ const ethers = require("ethers");
 // and the mnenomic phrase.
 // Hint: ethers.Wallet.createRandom();
 
+wallet = ethers.Wallet.createRandom();
+console.log(wallet.address);
+console.log(wallet.privateKey);
+console.log(wallet.mnemonic.phrase);
 
 // exit();
 
@@ -208,5 +277,16 @@ exercise = 5;
 // Hint: You need to append an index to the derivation path.
 
 // Your code here!
+
+mnemonic = wallet.mnemonic.phrase;
+
+let path, myWallet;
+for (let i = 0; i < 10; i++) {
+  path = `${baseDevPath}${i}`;
+  myWallet = ethers.HDNodeWallet.fromPhrase(mnemonic, path);
+  console.log("Path", path)
+  console.log("Address", i, myWallet.address);
+  console.log("Private key", i, myWallet.privateKey);
+}
 
 // exit();

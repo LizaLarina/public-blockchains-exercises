@@ -9,7 +9,7 @@
 // Whatever follows the double slash on the same line is ignored by
 // the computer, it is just for you to read.
 
-// Empty lines are also ignore, obviously.
+// Empty lines are also ignored, obviously.
 
 // Comments are perhaps the most important component in programming.
 // What do programmers write in a comment?
