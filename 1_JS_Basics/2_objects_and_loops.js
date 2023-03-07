@@ -40,6 +40,9 @@ console.log(typeof null);
 // Question. How is null different from undefined? null is an explicit value
 // assigned by the programmer, undefined may just happen to be.
 
+obj1 = null;
+console.log(typeof obj1);
+
 // EXERCISE 1. Create an object to represent a person.
 //////////////////////////////////////////////////////
 
@@ -49,16 +52,27 @@ console.log(typeof null);
 // Hint. The property name must contain the full name (Brendan Eich), and
 // the property birth must contain the year in which he was born (1961).
 
+person = {
+    name : "Brendan Eich",
+    year : 1961
+}
+
 // b. Access the properties of the person object.
 
-
+console.log(person.name);
 // EXERCISE 2. Add and remove properties to the person object.
 //////////////////////////////////////////////////////
+
+person.invention = "JavaScript";
 
 // Now you realize that it makes more sense to split the property 'name' into
 // two: 'first' and 'last' name. Accordingly you delete the propery name.
 
+person.firstName = "Brendan";
+person.lastName = "Eich";
+delete person.name;
 
+console.log(person);
 // EXERCISE 3. Create an array of persons.
 //////////////////////////////////////////
 
@@ -66,14 +80,35 @@ console.log(typeof null);
 // You already have Brendan, now add another two inspiring personalities.
 // For example, Pablo Picasso and Napoleon Bonaparte. When are they born?
 
+persons = [
+    person,
+    {
+        firstName : "Pablo",
+        lastName : "Picasso",
+        year : 1881
+    },
+    {
+        firstName : "Napoleon",
+        lastName : "Bonaparte",
+        year : 1821
+    }
+];
+
+
 // b. Count how many elements are in the array.
 
+console.log(persons.length);
+
 // c. Access the second element of the array.
+
+console.log(persons[1]);
 
 // Arrays are 0-indexed, that is the first element has index 0,
 // the second element 1, and so on.
 
 // d. Access the property year of the second element of the array.
+
+console.log(persons[1].year);
 
 // EXERCISE 4. Pick a random item in the array of persons.
 //////////////////////////////////////////////////////////
@@ -81,7 +116,7 @@ console.log(typeof null);
 // Hint. Generate a random number between 0 and the total
 // number of elements in the array, then "floor" it with the corresponding
 // method of the Math object.
-// randomNumber = ... 
+randomNumber = Math.floor(Math.random() * persons.length);
 console.log(persons[randomNumber]);
 
 // EXERCISE 5. Add a new elements to the array of persons.
@@ -96,6 +131,14 @@ console.log(persons[randomNumber]);
 // you would like to add the element. For instance the method `push`
 // will add at the bottom of the array.
 
+persons.push(
+    {
+        first: 'Phil',
+        last: 'Katz',
+        year: 1962
+    }
+);
+
 // Verify that you added at the bottom.
 console.log(persons[3]);
 
@@ -105,6 +148,12 @@ console.log(persons[3]);
 // Maybe you hurried too much with Phil Katz. What about
 // replacing him with Linus Torvalds (1969) instead?
 // Hint: simply assign a new value at a given array index.
+
+persons[3] = {
+    firstName: 'Linus',
+    lastName: 'Torvalds',
+    year: 1969
+}
 
 // Verify who is the bottom of the array.
 console.log(persons[3]);
@@ -134,6 +183,9 @@ console.log(persons);
 // in which the persons are born.
 // Hint: use console.log to print. Use let when you define the iterating index.
 
+for (let i = 0; i < persons.length; i++) {
+    console.log(persons[i].year);
+}
 
 // b. This time you want to create a short paragraph which verbosely
 // describes the content of the person array. The final paragraph should look
@@ -145,8 +197,34 @@ console.log(persons);
 // Hint2: You will also need some if logic to correctly add or not the comma
 // between the first and the second element and finishing with a dot.
 
+verbose = `There are ${persons.length} elements in the person array: `
+for (let i = 0; i < persons.length; i++) {
+    verbose += `element ${i + 1} is ${persons[i].firstName} ${persons[i].lastName}, born in ${persons[i].year}`;
+    if (i + 1 == persons.length) {
+        verbose += '.';
+    } else {
+        verbose += ', ';
+    }
+}
+
+console.log(verbose);
+
 // c. bonus. Can you replace the part "element 1" with "the first element" and
 // "element 2" with the "second element" and so on?
+
+order = ["first", "second", "third"];
+
+verbose = `There are ${persons.length} elements in the person array: `
+for (let i = 0; i < persons.length; i++) {
+    verbose += `the ${order[i]} element is ${persons[i].firstName} ${persons[i].lastName}, born in ${persons[i].year}`;
+    if (i + 1 == persons.length) {
+        verbose += '.';
+    } else {
+        verbose += ', ';
+    }
+}
+
+console.log(verbose);
 
 // EXERCISE 9. Loop through the properties of an object.
 ////////////////////////////////////////////////////////
@@ -167,6 +245,11 @@ console.log(persons);
 // Hint: in this exercise objects behave like arrays, but instead of a
 // numeric index, you use the property name.
 
+for (let property in persons[0]) {
+    if (persons[0].hasOwnProperty(property)) {  
+        console.log(property + ': ' + persons[0].property);
+    }
+}
 
 // EXERCISE 10. Bonus. Constant objects.
 ///////////////////////////////////////

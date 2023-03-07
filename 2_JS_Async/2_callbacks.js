@@ -33,9 +33,9 @@ let getLatestNews = (cb) => {
     ];
     console.log('News fetched, now I can print them.');
 
-    if (cb) cb(news);
+    if (cb) cb(news); // видимо cb = printNews 
 
   }, 2000);
 };
 
-getLatestNews();
+getLatestNews(printNews);

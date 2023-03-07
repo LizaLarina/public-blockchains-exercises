@@ -61,13 +61,15 @@ const mainnetProvider = new ethers.JsonRpcProvider(mainnetInfuraUrl);
 
 // This is an asynchronous anonymous self-executing function. It is a ugly
 // construct, but it allows you to use await inside its body.
-// (async () => {
-//     let net = await mainnetProvider.getNetwork();
-//     console.log('Async/Await!');
-//     console.log('Provider\'s network name: ', net.name);
-//     console.log('Provider\'s network chain id: ', Number(net.chainId));
-// })();
+(async () => {
+    
+    let net = await mainnetProvider.getNetwork();
+    console.log('Async/Await!');
+    console.log('Provider\'s network name: ', net.name);
+    console.log('Provider\'s network chain id: ', Number(net.chainId));
+})();
 
+process.exit(0);
 // However, the async function could also be named, and the result is:
 const network = async () => {
     let net = await mainnetProvider.getNetwork();
@@ -268,7 +270,7 @@ const blockInfo = async () => {
 
     const txReceipt = await mainnetProvider.getTransactionReceipt(txHash);
     console.log(txReceipt);
-    console.log('A transaction from', txReceipt.to, 'to', txReceipt.from);
+    console.log('A transaction from', txReceipt.from, 'to', txReceipt.to);
 
     // Long list...
     block = await mainnetProvider.getBlock(blockNumber, true);
@@ -276,7 +278,7 @@ const blockInfo = async () => {
 
 };
 
-// blockInfo();
+blockInfo();
 
 // Exercise 5. ENS names.
 //////////////////////////

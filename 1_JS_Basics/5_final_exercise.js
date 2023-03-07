@@ -16,6 +16,18 @@
 // any input number. For instance, if input is 10, the result is 55.
 // Motivational Hint: This exercise is often asked at job interviews.
 
+function fibonacci(index) {
+    fibSequence = [0, 1];
+    if (index <= 1) {
+        return fibSequence[index];
+    }
+    for (let i = 2; i <= index; i++) {
+        fibSequence[i] = fibSequence[i-1] + fibSequence[i-2];
+    }
+    return fibSequence[index];
+}
+
+console.log(fibonacci(10));
 
 // EXERCISE 2. Bonus. Recursive Fibonacci.
 //////////////////////////////////////////
@@ -48,6 +60,17 @@ console.log(resultOfRecursion);
 // Hint: it takes just 2 lines (but you could make it one).
 
 
+// function fibonacci(index, stopCondition = ) {
+//     if (stopCondition == index) return fibSequence[index];
+//     return fibonacci()
+// }
+
+// console.log(fibonacci(10));
+
+function fiboRec1(n) {
+    return n < 2 ?  n : fiboRec1(n-1) + fiboRec1(n-2);
+}
+fiboRec1(10);
 
 // FUN EXERCISE!
 ////////////////

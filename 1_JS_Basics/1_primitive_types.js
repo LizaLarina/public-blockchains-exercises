@@ -93,18 +93,23 @@ console.log(typeof undefined);
 
 // a. Compute (18 + 107) / (5 * 25)
 
+a = (18 + 107) / (5 * 25);
 console.log(a);
 
 // b. Compute the square root of one million.
 
+b = 1000000 ** 0.5;
+b = Math.sqrt(1000000);
 console.log(b);
 
 // c. Take the remainder of the division betwen 123 and 9 squared, minus 1.
 
+c = 123 % Math.pow(9, 2) - 1;
 console.log(c);
 
 // d. Take the integer part of the float number 2.123456789 (need to use Math).
 
+d = Math.floor(2.523456789);
 console.log(d);
 
 // Now compute:
@@ -142,10 +147,14 @@ console.log(luzernPopulation);
 // in a variable (and pick a proper name for the variable!).
 // Hint. The Math object is your friend.
 
+randomNumber = Math.random();
+console.log(randomNumber);
 
 // b. Update the variable so that the value of the random number is
 // between 0 and the one hundred thoudands.
 
+randomNumber *= 100,000;
+console.log(randomNumber);
 
 // EXERCISE 4. Conditionals.
 ////////////////////////////
@@ -158,6 +167,13 @@ console.log(luzernPopulation);
 // otherwise print "Few but good!"
 // Hint: Use console.log to print.
 
+if (luzernPopulation > randomNumber) {
+    console.log("Go Luzern!");
+} else if (luzernPopulation < randomNumber) {
+    console.log("Are we in the Matrix?");
+} else {
+    console.log("Few but good!");
+}
 
 // EXERCISE 5. String manipulation.
 ///////////////////////////////////
@@ -167,6 +183,11 @@ console.log(luzernPopulation);
 str1 = "Always remember that you are absolutely unique.";
 str2 = 'Just like everyone else.';
 
+strJoined = str1 + ' ' + str2;
+
+console.log(strJoined);
+
+console.log(strJoined.length);
 
 // b. Did you remember to add a space between them?
 // If so, how many characters is the final string?
@@ -179,24 +200,37 @@ str2 = 'Just like everyone else.';
 // Then, join it with str1 and update finalStr.
 // Important. String must end with a dot (needed for exercise below).
 
+str2 = "Just like other " + luzernPopulation + " persons in Luzern.";
+strJoined = str1 + ' ' + str2;
+console.log(strJoined);
+
 
 // d. Alternatively, you can specify strings using the backtick sign `
 // which allows for in-string variable substitution.
 
+// !!!
+
+strFinal = `${str1} Just like ${luzernPopulation} persons in Luzern.`;
 
 // e. If you made it until now, you may prefer a more positive message
 // in the finalStr variable. Extract a substring which contains only
 // the first part.
 // Hint: Use substring and the length property.
 
+strPositive = strFinal.substring(0, str1.length);
+console.log(strPositive);
 
 // f. Now shout it loud and make the it upper case.
 // Hint: Use toUpperCase.
 
+strPositive = strPositive.toUpperCase();
+console.log(strPositive);
 
 // g. Let's be honest. An upper case sentence must end with an exclamation mark.
 // Replace the dot at the end of the sentence with an exclamation mark.
 
+strPositive = strPositive.replace(".", "!");
+console.log(strPositive);
 
 // EXERCISE 6. Constants.
 /////////////////////////
@@ -204,6 +238,7 @@ str2 = 'Just like everyone else.';
 // You just unlocked a great insight with exercise 5, which is contained in
 // the variable finalStr. You do not want anybody to change that string
 // ever again, so you decide it to assign it to constant.
+finalStr = strPositive;
 const myFinalStr = finalStr;
 console.log(myFinalStr);
 
