@@ -45,7 +45,7 @@ const networkInfo = async () => {
     console.log('Block number: ', blockNumber);
 };
 
-// networkInfo();
+networkInfo();
 
 
 // Exercise 3. Connect a signer to the (not) UniMa blockchain.

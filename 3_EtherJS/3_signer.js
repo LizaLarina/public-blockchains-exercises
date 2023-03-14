@@ -305,15 +305,8 @@ const sendCheaperTransaction = async () => {
 // Hint3: if you don't know what a reasonable `maxFeePerGas` is, you can 
 // get an idea calling `getFeeData()`.
 
-<<<<<<< HEAD
-// c. Bonus. Repeat a+c., but this time cancel the transaction. How? Send a
-// transaction with the same nonce with zero value and recipient address
-// equal to sender address.
 
-const feeData = resubmitTransaction = async () => {
-=======
 const resubmitTransaction = async () => {
->>>>>>> dae11b320cd761fc2a8e7f624a8ece3d1f5f8186
 
     // Your Code here!
     feeData = await goerliProvider.getFeeData();
@@ -326,11 +319,6 @@ const resubmitTransaction = async () => {
 
 };
 
-<<<<<<< HEAD
-
-// resubmitTransaction();
-
-=======
 resubmitTransaction();
 
 
@@ -344,4 +332,3 @@ const cancelTransaction = async () => {
 };
 
 cancelTransaction();
->>>>>>> dae11b320cd761fc2a8e7f624a8ece3d1f5f8186
