@@ -48,7 +48,8 @@ networkInfo();
 // Hint: you will find the info printed to console after you start the hardhat
 // blockchain.
 
-let hhPrivateKey = "0x8ecdb66d6ac608dd911cd5ac595e7f4c4a92a6f3bc3353076b00ce0291f21684";
+// let hhPrivateKey = "0x8ecdb66d6ac608dd911cd5ac595e7f4c4a92a6f3bc3353076b00ce0291f21684";
+let hhPrivateKey = "0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80"
 const signer = new ethers.Wallet(hhPrivateKey, hardhatProvider);
 
 // Your code here!
@@ -96,7 +97,7 @@ checkBalance();
 
 // Send some Ether from one of your accounts to another one on NUMA.
 
-const account2 = process.env.METAMASK_2_ADDRESS;
+const account2 = process.env.METAMASK_1_ADDRESS;
 
 const sendTransaction = async () => {
 
