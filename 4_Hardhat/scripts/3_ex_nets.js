@@ -37,7 +37,12 @@
 ////////////////////////////////////////////////////////
 
 // Make the source code of your contract verified:
-// https://hardhat.org/hardhat-runner/docs/guides/verifying
+// https://hardhat.org/hardhat-runner/docs/guides/verifying 
+
+// ??? error
+// npx hardhat verify --show-stack-traces 0x1054fEB1d2dFa3564782a09eA459b307125C43e8 1688913156
+// npx hardhat verify --show-stack-traces 0x1054fEB1d2dFa3564782a09eA459b307125C43e8 $(($(date +%s) + 60))
+
 
 // Check Etherscan again.
 

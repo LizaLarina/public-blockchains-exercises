@@ -1,12 +1,16 @@
 // SPDX-License-Identifier: UNLICENSED
+// ?? which one to specify? any particular one?
 pragma solidity ^0.8.9;
 
 // Uncomment this line to use console.log
 import "hardhat/console.sol";
 
 contract Lock2 {
-    uint public unlockTime;
+    uint256 public immutable unlockTime;
     address payable public owner;
+    string public someGlobalVar = "Some global variable";
+    string public constant GLOBAL_VAR = "Some constant global variable";
+
 
     event Withdrawal(uint amount, uint when);
 
@@ -24,7 +28,7 @@ contract Lock2 {
         // Uncomment this line, and the import of "hardhat/console.sol", to print a log in your terminal
         console.log("Unlock time is %o and block timestamp is %o", unlockTime, block.timestamp);
 
-        // require(block.timestamp >= unlockTime, "You can't withdraw yet");
+        require(block.timestamp >= unlockTime, "You can't withdraw yet");
         require(msg.sender == owner, "You aren't the owner");
 
         emit Withdrawal(address(this).balance, block.timestamp);

@@ -203,7 +203,7 @@ async function main() {
     b2 = ethers.utils.formatEther(b2);
     console.log('The balance after withdrawing is ', b2);
 
-  }; // ??? did not get any error
+  };
 
   // await withdrawAttempt1();
   
@@ -212,13 +212,11 @@ async function main() {
 
   // a. Comment out the require checking for the unlock date.
 
-    // uncommented the line but nothing is printed to the console???
-
   // b. Deploy the Lock2 contract again and try to withdraw now.
   // Hint: the contract address will be different.
   
   const withdrawAgain = async() => {
-    const newContractAddress = "0x4ed7c70F96B99c776995fB64377f0d4aB3B0e1C1";
+    const newContractAddress = "0x5FC8d32690cc91D4c39d9d3abcBD16989F875707";
 
     // Wrapped Ethers.
     const newLock = await hre.ethers.getContractAt(contractName,
@@ -235,7 +233,7 @@ async function main() {
     await withdrawAttempt1(newLock);
   };
   
-  // await withdrawAgain();
+  await withdrawAgain();
   
 
 
