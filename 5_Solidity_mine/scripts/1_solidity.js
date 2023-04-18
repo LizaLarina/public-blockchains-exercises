@@ -53,10 +53,6 @@
 // Hint: https://docs.soliditylang.org/en/develop/layout-of-source-files.html#version-pragma
 // Hint2: https://bytearcher.com/articles/semver-explained-why-theres-a-caret-in-my-package-json/
 
-// The compiler version specifier ^0.8.9 means that any Solidity compiler version 
-// within the 0.8.x series can be used (as long as it is greater than or equal to 
-// version 0.8.9).
-
 // c. Before `pragma` there is an important comment tha sets the license of
 // the contract. Pick a license for your contract.
 // Hint: https://docs.soliditylang.org/en/develop/layout-of-source-files.html#spdx-license-identifier
@@ -109,7 +105,6 @@
 
 // https://solidity-by-example.org/variables/
 
-// ?? you cannot set a global variable yourself in Solidity. Global variables are predefined by the Solidity compiler and are read-only
 // Create a new _global_ variable of type `string` and query it via Ether.JS
 // (after deployment). Notice the difference if you declare it public or not.
 
@@ -130,25 +125,35 @@ async function readVar() {
     // You need to get a signer and a contract.
     // Hint: use methods .getContractAt and .getSigners as we did in 
     // 4_Hardhat/2_ex_deploy.js
-
-    // Your code here!
-    const contractName = "Lock2";
-    const contractAddress = "0x5FbDB2315678afecb367f032d93F642f64180aa3";  
-    console.log("1"); 
+  
+    // Getting the default signer.
     const hardhatSigners = await hre.ethers.getSigners();
     const hhSigner = hardhatSigners[0];
-    console.log("2");  
-    const lock = await hre.ethers.getContractAt(contractName, contractAddress, hhSigner);  
+    console.log("HH Signer address:", hhSigner.address);
+  
+    // Getting the contract.
+    const contractName = "Lock2";
+    // Change the contract address to your deployed contract address.
+    const contractAddress = "0xE4f3B451e009ea678Bb43038026DB04828985711";
+    console.log("2");
+    const lock = await hre.ethers.getContractAt(
+        contractName,
+        contractAddress,
+        hhSigner
+    );
+  
+    console.log("3");
+    // Print the global variable you just created.
 
-    console.log(contractName + " GLOBAL_VAR:", await lock.GLOBAL_VAR());
-    console.log("3");  
-    console.log("someGlobalVar", someGlobalVar);
+    console.log(contractName + " someStateVar:", await lock.someStateVar());
+    // Constant (followed the convention).
+    console.log(contractName + " STATE_VAR:", await lock.STATE_VAR());
+    
     console.log(contractName + " unlockTime:", await lock.unlockTime());
-    console.log("4");  
 
 };
 
-readVar();
+// readVar();
 
 // Bonus. Exercise 2B. Utility Function.
 ////////////////////////////////////////
@@ -169,8 +174,18 @@ readVar();
 // https://www.javascripttutorial.net/javascript-return-multiple-values/
 
 async function getContractAndSigner(cName, cAddress, signerIdx = 0) {
+    
+    // Getting the default signer.
+    const hardhatSigners = await hre.ethers.getSigners();
+    const signer = hardhatSigners[signerIdx];
   
-    // Your code here!
+    const contract = await hre.ethers.getContractAt(
+        cName,
+        cAddress,
+        signer
+    );
+  
+    return [ contract, signer ];
 
 }
 
@@ -209,8 +224,16 @@ async function getContractAndSigner(cName, cAddress, signerIdx = 0) {
 
 async function constructor() {
     console.log("Exercise 3: Constructor");
-
-    // Your code here!
+  
+    // Getting the contract.
+    const cName = "Lock3";
+    // Change the contract address to your deployed contract address.
+    const cAddress = "0xe8865C585DE6A71900922dcaB71901CEBe6f37ae";
+  
+    const [ lock ] = await getContractAndSigner(cName, cAddress);
+  
+    let blockNum = await lock.blockNumber();
+    console.log(cName + " blockNumber:", Number(blockNum));
 }
 
 // constructor();
@@ -252,10 +275,42 @@ async function constructor() {
 // no changes at all are taking place, meaning that no event is ever emitted,
 // even if the require statement comes _after_ the emit statement.
 
+// 5_?? 2 events emitted
 async function events() {
     console.log("Exercise 4: Events");
-
-    // Your code here!
+  
+    // Getting the contract.
+    const cName = "Lock3";
+    // Change the contract address to your deployed contract address.
+    const cAddress = "0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512";
+  
+    const [ lock ] = await getContractAndSigner(cName, cAddress);
+  
+    // ...args is a special notation (rest operator) to combine any number
+    // of input arguments into an array.
+    // https://www.freecodecamp.org/news/three-dots-operator-in-javascript/
+    lock.on("WithdrawalAttempt", (...args) => {
+        console.log("Attempted Withdrwal");
+        console.log(args);
+    });
+  
+    // You can also access the input arguments directly.
+    lock.on("Withdrawal", (balance, timestamp) => {
+        console.log("Withdrawal");
+        console.log("Balance: ", balance);
+        console.log("Timestamp: ", timestamp);
+        process.exit(0);
+    });
+  
+    // Try and catch is not necessary, but it will hide a long error message.
+    try {
+        console.log("here");
+        await lock.withdraw();
+        console.log("An exception DID NOT occurr.");
+    }
+    catch (e) {
+        console.log("An exception occurred.");
+    }
 }
 
 // events();
@@ -268,9 +323,25 @@ async function events() {
 // information is available.
 
 async function getAllEvents() {
-    console.log("Bonus. Exercise 4: Get All Events");
 
-    // Your code here!
+    console.log("Bonus. Exercise 4: Get All Events");
+  
+    // Getting the contract.
+    const cName = "Lock3";
+    // Change the contract address to your deployed contract address.
+    const cAddress = "0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512";
+  
+    const [ lock ] = await getContractAndSigner(cName, cAddress);
+  
+    let fromBlock = 0;
+    let toBlock = hre.ethers.provider.getBlock().number;
+    const events = await lock.queryFilter("*", fromBlock, toBlock);
+  
+    console.log(cName + ": " + events.length + " events found.");
+  
+    console.log("First Event:");
+    console.log(events[0]);
+
 }
 
 // getAllEvents();
@@ -314,20 +385,71 @@ async function getAllEvents() {
 async function mappings() {
     console.log("Advanced. Exercise 5: Mappings (and payable)");
 
-    // Your code here!
-}
+   // Getting the contract.
+   const cName = "Lock4";
+   // Change the contract address to your deployed contract address.
+   const cAddress = "0xDc64a140Aa3E981100a9becA4E685f962f0cF6C9";
 
-const checkBalanceBeforeAfter = async (signer, lockContract) => {
-    // Check the balance change for signer.
-  
-    // Your code here!
+   // Get five contracts for 5 signers.
+   const [ lock0, signer0 ] = await getContractAndSigner(cName, cAddress, 0);
+   const [ lock1, signer1 ] = await getContractAndSigner(cName, cAddress, 1);
+   const [ lock2, signer2 ] = await getContractAndSigner(cName, cAddress, 2);
+   const [ lock3, signer3 ] = await getContractAndSigner(cName, cAddress, 3);
+   const [ lock4, signer4 ] = await getContractAndSigner(cName, cAddress, 4);
+   
+   // This will not be added as owner.
+   const [ lock5, signer5 ] = await getContractAndSigner(cName, cAddress, 5);
+    // Let's have 5 owners in total.
     
-};
-
-const getContractStatus = async lockContract => {
-    // Report info about contract.
+    // Default signer adds two other owners.
+    await lock0.addOwner(signer1.address);
+    await lock0.addOwner(signer2.address);
+    // Owner at index 2 adds another one.
+    await lock2.addOwner(signer3.address);
+    // Owner at index 3 adds another one.
+    await lock3.addOwner(signer4.address);
   
-    // Your code here!
-};
+    // Let's count how many we have.
+    await getContractStatus(lock0);
+  
+    // Let's check the mapping values.
+    console.log('Mappings for signers (0-5):')
+    console.log(await lock0.owners(signer0.address));
+    console.log(await lock0.owners(signer1.address));
+    console.log(await lock0.owners(signer2.address));
+    console.log(await lock0.owners(signer3.address));
+    console.log(await lock0.owners(signer4.address));
+    console.log(await lock0.owners(signer5.address));
+  
+    // Each owner should get 0.2 Ether. Let's check whether it works.
+    await checkBalanceBeforeAfter(signer0, lock0);
+    await checkBalanceBeforeAfter(signer1, lock1);
+    await checkBalanceBeforeAfter(signer2, lock2);
+    await checkBalanceBeforeAfter(signer3, lock3);
+    await checkBalanceBeforeAfter(signer4, lock4);
+  }
+  
+  const checkBalanceBeforeAfter = async (signer, lockContract) => {
+    // Check the balance change for signer.
+    let b1 = await signer.getBalance();
+    let tx = await lockContract.withdraw();
+    await tx.wait();
+    let b2 = await signer.getBalance();
+    // With Ethers v5 we need to explicitely cast to BigInt. 
+    let diff = BigInt(b2) - BigInt(b1);
+    b2 = ethers.utils.formatEther(diff);
+    console.log('The balance after withdrawing is net +' + b2 + ' ETH');
+  
+    await getContractStatus(lockContract);
+  };
+  
+  const getContractStatus = async lockContract => {
+    // Report info about contract.
+    let leftInContract = await hre.ethers.provider.getBalance(lockContract.address);
+    leftInContract = ethers.utils.formatEther(leftInContract);
+    let numOwners = await lockContract.ownerCounter();
+    console.log('On lock there is +' + leftInContract + ' ETH left and ' + 
+                    numOwners + " owners now");
+  };
 
-// mappings();
+mappings();

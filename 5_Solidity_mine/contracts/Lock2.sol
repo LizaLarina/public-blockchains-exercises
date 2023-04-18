@@ -1,5 +1,4 @@
 // SPDX-License-Identifier: UNLICENSED
-// ?? which one to specify? any particular one?
 pragma solidity ^0.8.9;
 
 // Uncomment this line to use console.log
@@ -8,8 +7,8 @@ import "hardhat/console.sol";
 contract Lock2 {
     uint256 public immutable unlockTime;
     address payable public owner;
-    string public someGlobalVar = "Some global variable";
-    string public constant GLOBAL_VAR = "Some constant global variable";
+    string public someStateVar = "Some state variable";
+    string public constant STATE_VAR = "Some constant state variable";
 
 
     event Withdrawal(uint amount, uint when);
