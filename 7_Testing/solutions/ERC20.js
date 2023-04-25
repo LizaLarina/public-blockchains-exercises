@@ -13,7 +13,7 @@ describe("ERC20", function () {
     // and reset Hardhat Network to that snapshot in every test.
     async function deployERC20() {
         const name = "MyERC20",
-            symbol = "MR20",
+            symbol = "MR20", // 7_?? where do we take this from
             totalSupply = 1000;
 
         // Contracts are deployed using the first signer/account by default
@@ -114,7 +114,7 @@ describe("ERC20", function () {
 
             const COINS = 10;
 
-            // Transfer 50 tokens from owner to owner
+            // Transfer 50 tokens from owner to owner //7_??
             await expect(myErc20.transfer(otherAccount.address, COINS))
                 .to.emit(myErc20, "Transfer")
                 .withArgs(owner.address, otherAccount.address, COINS);

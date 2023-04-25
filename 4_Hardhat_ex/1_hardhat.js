@@ -75,9 +75,6 @@ getNonce();
 // Check the slides in ILIAS.
 // Hint: only accessible within UniMa network.
 
-//how???
-// You are using the wrong chain! ??? maybe vpn?
-
 // b. Check your balance on UniMa network.
 
 const checkBalance = async () => {
