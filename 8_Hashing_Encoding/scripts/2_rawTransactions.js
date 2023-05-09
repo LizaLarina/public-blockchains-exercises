@@ -7,27 +7,32 @@ const { BigNumber, ethers } = require("ethers");
 console.log(ethers.version);
 
 // Todo: Update this contract address.
-const cAddress = "0x959922bE3CAee4b8Cd9a407cc3ac1C251C2007B1";
+const cAddress = "0x5FbDB2315678afecb367f032d93F642f64180aa3";
 const cName = "TestContract";
 
 const localhostProvider = new ethers.providers.JsonRpcProvider(
     "http://127.0.0.1:8545"
 );
 
+async function signers() {
+    const signers = await hre.ethers.getSigners();
+    return signers;
+}
 // Hardhat.
 // const [signer1, signer2] = await hre.ethers.getSigners();
 
-let signer = new ethers.Wallet(
-    process.env.HARDHAT_1_PRIVATE_KEY,
-    localhostProvider
-);
-// console.log("Signer 1: ", signer.address);
+// let signer = new ethers.Wallet(
+//     process.env.HARDHAT_1_PRIVATE_KEY,
+//     localhostProvider
+// );
+const [signer1, signer2] = signers();
+console.log("Signer 1: ", signer1.address);
 
-let deployer = new ethers.Wallet(
-    process.env.HARDHAT_2_PRIVATE_KEY,
-    localhostProvider
-);
-// console.log("Signer 2: ", deployer.address);
+// let deployer = new ethers.Wallet(
+//     process.env.HARDHAT_2_PRIVATE_KEY,
+//     localhostProvider
+// );
+console.log("Signer 2: ", signer2.address);
 
 const getContract = async (
     signer = deployer

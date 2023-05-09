@@ -15,7 +15,7 @@ const path = require('path');
 
 // a. Try out different execution modes and print the value of `pathToDotEnv`.
 // Hint: use Node Runner and from the terminal.
-
+console.log("process.cwd()", process.cwd());
 let pathToDotEnv = path.resolve(process.cwd(), '.env');
 console.log(pathToDotEnv);
 
