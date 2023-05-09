@@ -1,10 +1,7 @@
 {
-  "dependencies": {
-    "dotenv": "^16.0.3",
-    "ethers": "^6.0.8",
-    "node-fetch": "^3.3.0"
-  },
+  "name": "hardhat-project",
   "devDependencies": {
-    "hardhat": "^2.13.0"
+    "@nomicfoundation/hardhat-toolbox": "^2.0.0",
+    "hardhat": "^2.12.2"
   }
 }
