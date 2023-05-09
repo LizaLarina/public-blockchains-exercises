@@ -1,0 +1,31 @@
+{
+  "name": "mtp-blockchain-assignments",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "truffle compile && truffle deploy",
+    "compile": "truffle compile",
+    "dashboard": "truffle dashboard",
+    "dash": "truffle migrate --network dashboard && truffle console --network dashboard",
+    "prod": "truffle compile && truffle migrate --network unima"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/elianderlohr/mtp-blockchain-assignments.git"
+  },
+  "author": "Elias Anderlohr, Gina Weber & Jonas Grill",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/elianderlohr/mtp-blockchain-assignments/issues"
+  },
+  "homepage": "https://github.com/elianderlohr/mtp-blockchain-assignments#readme",
+  "dependencies": {
+    "@openzeppelin/contracts": "^4.8.2",
+    "dotenv": "^16.0.3"
+  },
+  "devDependencies": {
+    "@nomicfoundation/hardhat-toolbox": "^2.0.0",
+    "hardhat": "^2.13.0"
+  }
+}
