@@ -7,11 +7,7 @@ const { BigNumber, ethers } = require("ethers");
 console.log(ethers.version);
 
 // Todo: Update this contract address.
-<<<<<<< HEAD
 const cAddress = "0x5FbDB2315678afecb367f032d93F642f64180aa3";
-=======
-const cAddress = "0x09635F643e140090A9A8Dcd712eD6285858ceBef";
->>>>>>> 247625f2451efc66d712fea7e4c89c66edda38a2
 const cName = "TestContract";
 
 const localhostProvider = new ethers.providers.JsonRpcProvider(
@@ -120,7 +116,8 @@ const rawTransactionBasic = async () => {
     
 };
 
-// rawTransactionBasic();
+
+rawTransactionBasic();
 
 
 // Exercise 2: Raw transaction with no parameters: do your own encoding.
